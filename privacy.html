@@ -54,17 +54,24 @@
   Deleting the app deletes this data.</p>
 
   <h2>What is sent off your device, and why</h2>
-  <p>Two features work by sending a request to our server (hosted on Cloudflare):</p>
+  <p>Two features work by sending a request to our server (a Cloudflare Worker operated
+  for Vestara):</p>
   <ul>
-    <li><strong>Ask</strong> — when you ask a question, the question text and a summary
-    of your chart are sent to our server, which forwards them to an AI service provider
-    to compose the answer.</li>
+    <li><strong>Ask</strong> — when you ask a question, the question text, de-identified
+    chart inputs, the day's sky information, and an installation-level session identifier
+    are sent to our server, which forwards the request to DeepSeek, an independent
+    third-party AI processor, to compose the answer.</li>
     <li><strong>Readings</strong> — when you purchase a reading, your chart details are
     sent to our server to generate the report.</li>
   </ul>
+  <p>The session identifier exists for daily fair-use rate limiting. It is kept in
+  rate-limit storage on a per-day basis and expires after that window; it is not linked
+  to your name or any account — we don't have accounts — and is not used to identify you.</p>
   <p>These requests are transmitted over HTTPS, are used only to generate your response,
-  and are not used for advertising, profiling, or sale to anyone. They are not linked to
-  an account or identity — we don't have accounts.</p>
+  and are never used for advertising, profiling, or sale to anyone. Because requests pass
+  through Cloudflare and DeepSeek, those providers may process or retain request data
+  under their own service, security, and retention practices; we do not maintain an
+  account-based history of your questions.</p>
 
   <h2>Purchases</h2>
   <p>Subscriptions and in-app purchases are processed entirely by Apple. We never see
@@ -74,9 +81,10 @@
   <h2>Third parties we rely on</h2>
   <ul>
     <li><strong>Apple</strong> — App Store distribution and payment processing.</li>
-    <li><strong>Cloudflare</strong> — hosts the server that generates Ask answers and readings.</li>
-    <li><strong>AI service provider</strong> — receives the question text and chart summary
-    (never your name or contact details, which we don't collect) to compose responses.</li>
+    <li><strong>Cloudflare</strong> — hosts the server that handles Ask answers and readings.</li>
+    <li><strong>DeepSeek</strong> — the AI processor that receives the question text and
+    de-identified chart summary (never your name or contact details, which we don't
+    collect) to compose responses.</li>
   </ul>
   <p>We use no advertising networks, no analytics SDKs, and no social plugins.</p>
 
